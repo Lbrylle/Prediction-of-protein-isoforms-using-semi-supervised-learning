@@ -1,1 +1,1 @@
-# DeepLearningP29-Prediction-of-protein-isoforms-using-semi-supervised-learning
+# 02456 - Project: Prediction-of-protein-isoforms-using-semi-supervised-learning
