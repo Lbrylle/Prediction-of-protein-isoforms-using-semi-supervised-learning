@@ -1,0 +1,7 @@
+Loaded module: cuda/12.1
+Loaded dependency [python3/3.10.12]: gcc/11.4.0-binutils-2.40
+Loaded dependency [python3/3.10.12]: sqlite3/3.42.0
+Loaded module: python3/3.10.12
+
+Loading python3/3.10.12
+  Loading requirement: gcc/11.4.0-binutils-2.40 sqlite3/3.42.0
