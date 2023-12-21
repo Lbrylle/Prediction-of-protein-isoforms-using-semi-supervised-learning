@@ -11,30 +11,27 @@ Parts of the code is inspired by the exercise in week 7 of the course Deep Learn
 
 
 # imports
-# TODO: REMOVE UNUSED IMPORTS
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
-from modules.plotting import *
-from modules.helperFunctions import *
+from modules.plotting import * # import a plotting function for showing temporary results
+from modules.helperFunctions import * # importing reduce, ReparameterizedDiagonalGaussian, init_dataloaders
 from tqdm import tqdm
 from collections import defaultdict
 from typing import *
 from torch import nn, Tensor
-import torch.optim as optim
-import torch.nn.init as init
 from torch.utils.data import DataLoader
 from torch.distributions import Distribution
-from torch.distributions import Normal
 from sklearn.model_selection import train_test_split
-#from functions import reduce, ReparameterizedDiagonalGaussian, init_dataloaders
-import time
-import os
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using ", device)
 
 
+############################################################################################################
+#* THE MAIN MODEL (M1) (largely inspired by week 7 in deep learning)
+############################################################################################################
 
 
 class VariationalAutoencoder(nn.Module):
@@ -181,6 +178,7 @@ class VariationalInference(nn.Module):
 
 
 if __name__ == '__main__':
+    # parameters:
     batch_size = 64
     latent_features = 512
     num_epochs = 100
@@ -192,12 +190,14 @@ if __name__ == '__main__':
     random_seed_ = 1
 
 
+
     # seeding 
     random_seed(random_seed_)
 
     # save_folders
     save_path = init_folders(experiment_name)
 
+    # save the parameters in the folder
     save_parameters(save_path,
                     batch_size=batch_size,
                     latent_features=latent_features,
@@ -211,7 +211,10 @@ if __name__ == '__main__':
                     )
 
 
-    # Regression FNN
+    ############################################################################################################
+    #* THE REGRESSOR
+    ############################################################################################################
+
     regressor = nn.Sequential(
                 nn.Linear(latent_features, 1024),
                 nn.ReLU(),
@@ -221,10 +224,13 @@ if __name__ == '__main__':
             ).to(device)
 
 
+
+
+    ############################################################################################################
+    #* LOAD DATA SPLITS
+    ############################################################################################################
+
     path_to_data = "/dtu-compute/datasets/iso_02456/hdf5-row-sorted/"
-
-
-
 
 
     from torch.utils.data import DataLoader
@@ -235,7 +241,6 @@ if __name__ == '__main__':
     # THE MAIN TRAINING SPLIT (some y's are 'labelled')
     train_split = MainSplit(path_to_data, train=True)
     train_loader = DataLoader(train_split, batch_size=batch_size, shuffle=True)
-
 
 
     # THE MAIN TEST SPLIT (All y's are 'labelled'), Is further split into a training for FNN (called test) and validation 
@@ -259,7 +264,9 @@ if __name__ == '__main__':
 
 
 
-
+    ############################################################################################################
+    #* TRAINING THE MODEL
+    ############################################################################################################
 
     # VAE
     vae = VariationalAutoencoder(input_dim, batch_size, latent_features)
