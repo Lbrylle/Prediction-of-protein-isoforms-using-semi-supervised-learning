@@ -28,11 +28,13 @@ https://drive.google.com/drive/folders/1vJQ_KLSOcMv2daaFpuJoyUxyqpcWQDX5?usp=dri
 
 * misc/distribution_of_z.py: script for creating the appendix B
 
-* misc/plot_elbo: script for creating the plots (figure 3) associated with the loss of M1 and M2
+* misc/plot_elbo.py: script for creating the plots (figure 3) associated with the loss of M1 and M2
 
-* misc/plot_mse: script for creating the plots (figure 4) associated with the MSE loss of all the models
+* misc/plot_mse.py: script for creating the plots (figure 4) associated with the MSE loss of all the models
 
-* misc/R2_calculation: script for calculating the **Coefficient of Determination** ($R^2$-value). 
+* misc/R2_calculation.py: script for calculating the **Coefficient of Determination** ($R^2$-value). 
+
+* misc/GaussianIsoforms.csv: the determined means and standard deviations of the $y$'s
 
 *In the modules folder one would find:*
 
