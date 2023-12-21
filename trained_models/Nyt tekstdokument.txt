@@ -1,8 +1,0 @@
-Y3_next = (H and  not Y3 ) ) or ( ( H and  not Y0 ) ) or ( ( H and Y1 ) ) or ( ( B and  not H and  not R and  not L ) ) or ( ( B and  not R and  not Y3 and  not Y1 ) ) or ( ( B and  not R and  not Y0 ) ) or ( ( B and Y2 and  not Y1 ) ) or ( ( B and Y2 and Y0 ) ) or ( ( B and Y3 and  not Y1 and  not Y0 ) ) or ( ( B and  not R and Y3 and Y1 ) ) or ( ( B and  not H and R and L)
-
-Y2_next =  (not B) or ( not H) or (R) or ( not Y1 and  not H) or (R) or ( not L) or ( not Y3) or ( not Y2 and  not B) or ( not H) or (R) or (Y0 and  not H) or (R) or ( not L) or ( not Y2) or (Y1 and B) or ( not H) or ( not R) or (L) or ( not Y3) or ( not Y2) or (Y1) or (Y0 and B) or ( not H) or ( not R) or (L) or (Y3) or ( not Y1) or (Y0)
-(kan godt være gal...)
-
-Y1_next =  (not H and  not R and L and  not Y3 and  not Y2 and  not Y1 and Y0) or ( not B and  not H and L and  not Y2 and Y1 and  not Y0) or ( not B and  not H and L and Y3 and Y1) or ( not H and R and  not L and Y2 and  not Y1 and Y0) or ( not H and R and  not L and Y3 and  not Y1 and  not Y0) or (B and  not H and  not R and L and  not Y1) or (B and  not H and  not R and L and  not Y3 and Y0) or (B and  not H and  not R and L and Y2) or (B and  not H and  not R and L and Y3 and  not Y0) or (B and  not H and R and  not L and  not Y1) or (B and  not H and R and  not L and  not Y3 and Y0) or (B and  not H and R and  not L and Y2) or (B and  not H and R and  not L and Y3 and  not Y0)
-
-Y0_next =
