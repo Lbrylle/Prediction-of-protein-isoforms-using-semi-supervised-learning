@@ -1,6 +1,8 @@
 # 02456 - Project: Prediction-of-protein-isoforms-using-semi-supervised-learning
+This is the github-repository associated with project *Prediction of protein isoforms using semi-supervised learning* by Lucas Brylle (s203832) and Nikolaj Hertz (s214644) from the Technical University of Denmark. It explores the application of semi-supervised learning to predict protein isoforms.
 
-This is the github-repository associated with project *Prediction of protein isoforms using semi-supervised learning* by Lucas Brylle (s203832) and Nikolaj Hertz (s214644) of the Technical University of Denmark. 
+## Abstract
+Protein isoforms are generally understudied compared to gene expressions and to address this gap, this project seeks to build a framework based on Variational Autoencoders to predict the isoform expression. Specifically, a comparison between an unsupervised and a semi-supervised approach will be performed, where it is examined whether including some of the labels hereby constructing a semi-labelled training data split, will improve the learning process of the model. The models are compared to benchmarks models such as a regressor trained on the extracted features from a simple PCA. The described methods result in a poor performance for the semi-supervised setup, compared to the other methods. However, this can be due to some of the chosen distributions, the tuning of the hyper-parameters and the basic notion of how applicable the model is in the setting. 
 
 ## Files
 
@@ -34,5 +36,11 @@ In the modules folder one would find:
 * modules/MainSplit.py: modified version of the pytorch datasets contained in the IsoDatasets, in order to create the stratified main split of the data
 
 * modules/plotting.py: some plotting functions (used for showing performance under training)
+
+##Contributions
+For contributions or queries, please contact s203832@student.dtu.dk or s214644@student.dtu.d.
+
+##Acknowledgements
+Special thanks to our supervisors Jes Frellsen (jefr@dtu.dk) and Kristoffer Vitting-Seerup (krivi@dtu.dk)
 
 
