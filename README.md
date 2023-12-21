@@ -21,14 +21,16 @@ https://drive.google.com/drive/folders/1vJQ_KLSOcMv2daaFpuJoyUxyqpcWQDX5?usp=dri
 
 * FNN.py: The main file for the FNN (Feed-forward neural network)
 
+* tSNE.py: The main file for creating figure 1. 
+
 *In the misc folder one would find:*
 * misc/distribution_of_y.py: script for creating the appendix A
 
 * misc/distribution_of_z.py: script for creating the appendix B
 
-* misc/plot_elbo: script for creating the plots associated with the loss of M1 and M2
+* misc/plot_elbo: script for creating the plots (figure 3) associated with the loss of M1 and M2
 
-* misc/plot_mse: script for creating the plots associated with the MSE loss of all the models
+* misc/plot_mse: script for creating the plots (figure 4) associated with the MSE loss of all the models
 
 * misc/R2_calculation: script for calculating the **Coefficient of Determination** ($R^2$-value). 
 
@@ -48,9 +50,9 @@ https://drive.google.com/drive/folders/1vJQ_KLSOcMv2daaFpuJoyUxyqpcWQDX5?usp=dri
 
 * epoch_data/M2_test.pkl: the test ELBO and test MSE error for $\mathcal{M}_{M2}$
 
-* epoch_data/M1_train.npy: pending
+* epoch_data/M1_*loss.npy: two files containing the test and train loss for the ELBO (equation 1)
 
-* epoch_data/M1_test.npy: pending
+* epoch_data/m1_*fnn.npy: two files containing the test and train MSE for the regressor.
 
 * epoch_data/pca_train.npy: the train MSE error for regressor trained on PCA features
 
@@ -59,6 +61,8 @@ https://drive.google.com/drive/folders/1vJQ_KLSOcMv2daaFpuJoyUxyqpcWQDX5?usp=dri
 * epoch_data/fnn_train.npy: the train error for the Feed-forward Neural Network
 
 * epoch_data/fnn_test.npy: the test error for the Feed-forward Neural Network
+
+* epoch_data/y_mean.npy: the mse for every datapoint using the mean of the y's. 
 
 
 
