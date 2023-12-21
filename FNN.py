@@ -12,10 +12,8 @@ from collections import defaultdict
 from tqdm import tqdm
 from modules.plotting import *
 from modules.helperFunctions import *
-import os
-import time
 from torch.distributions import Normal
-import random
+
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -23,6 +21,9 @@ print("device", device)
 
 
 
+############################################################################################################
+#* THE MAIN MODEL (FNN)
+############################################################################################################
 
 
 class FNN(nn.Module):
@@ -70,10 +71,11 @@ if __name__ == '__main__':
     experiment_name = 'FNN_final_relu'
 
 
-
+    # initialize folder structure
     save_path = init_folders(experiment_name)
 
 
+    # save parameters of current run
     save_parameters(save_path, 
                     experiment_name=experiment_name,
                     input_dim=input_dim, 
@@ -83,9 +85,14 @@ if __name__ == '__main__':
                     batch_size=batch_size,
                     learning_rate=learning_rate)
 
-
+    # random seeding
     random_seed(random_seed_)
 
+
+
+    ############################################################################################################
+    #* THE DATA (MainSplit)
+    ############################################################################################################
 
 
     # THE MAIN TRAINING SPLIT
@@ -114,6 +121,12 @@ if __name__ == '__main__':
     train_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
     validation_loader = DataLoader(validation_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
 
+
+
+
+    ############################################################################################################
+    #* TRAINING THE MODEL
+    ############################################################################################################
 
 
     model = FNN(input_dim, N_isoform)
@@ -178,16 +191,13 @@ if __name__ == '__main__':
                 validation_FNN = np.mean(validation_epoch_data["FNN"])
                 validation_data["FNN"].append(validation_FNN)
 
-            
+
+            # save data
             np.save(save_path + '/training_FNN.npy', train_data['FNN'])
             np.save(save_path + '/validation_FNN.npy', validation_data['FNN'])
             np.save(save_path + '/last_epoch_FNN.npy', validation_epoch_data["FNN"])
 
             torch.save(model.state_dict(), save_path + '/FNN.pth')
-
-            #createLossPlotFNN2(train_data['FNN'], validation_data['FNN'], 'LONELY_FNN', save_path)
-
-
 
 
 
