@@ -5,6 +5,9 @@ This is solely based on the r2_score by sklearn. This script calculates the Coef
     FNN trained on M1 features
     FNN trained directly on data. 
     (maybe include regressor from M2)
+
+
+OBS: THIS NEEDS TO BE MOVED ONE DIRECTORY IF YOU WISH TO RUN IT
 """
 
 
@@ -188,6 +191,25 @@ regressor_m1.eval()
 
 
 
+############################################################################################################
+#* LOAD M2 FFN
+############################################################################################################
+
+
+regressor_m2 = nn.Sequential(
+            nn.Linear(input_dim, 1024),
+            nn.BatchNorm1d(1024),
+            nn.ReLU(),
+            nn.Linear(1024, 1024),  
+            nn.BatchNorm1d(1024),
+            nn.ReLU(),
+            nn.Linear(1024, 2*output_dim)
+        )
+
+m2_ffn_pth = 'path_to_m2_ffn'
+
+regressor_m2.load_state_dict(torch.load(m2_ffn_pth))
+regressor_m2.eval()
 
 
 
@@ -201,18 +223,12 @@ train_loader, test_loader, validation_loader = init_dataloaders(batch_size)
 
 
 ############################################################################################################
-#* MODEL THAT PREDICTS THE MEAN OF THE y's
+#* CALCULATING THE MEAN
 ############################################################################################################
-
 
 
 y_save = torch.zeros(1, output_dim)
 
-#N = len(train_loader.dataset.gtex_train_idx)
-
-# calculates the mean for the labelled part of the train split
-# for i in tqdm(range(N)):
-#     y_save = y_save + (train_loader.dataset[i][1]).reshape(1,-1)
 
 N = len(validation_loader)
 
@@ -222,8 +238,6 @@ for (_,y) in tqdm(validation_loader, desc='y_mean'):
 
 
 y_mean = y_save/N
-
-#torch.save(y_mean, 'y_validaiton_mean.pt')
 
 
 def y_mean_pred(batch_size):
@@ -245,7 +259,7 @@ def to_tensor(array):
 
 
 
-pca_RSS, m1_RSS, fnn_RSS, mean_RSS = 0, 0, 0, 0
+pca_RSS, m1_RSS, m2_RSS, fnn_RSS, mean_RSS = 0, 0, 0, 0, 0
 
 SST = 0
 
@@ -290,6 +304,13 @@ for i, (x,y) in tqdm(enumerate(test_loader), desc='R2'):
 
     m1_RSS += torch.sum(e @ e.T).item()
 
+    #* M2
+    y_pred = regressor_m2(x)
+
+    e = y - y_pred
+
+    m2_RSS += torch.sum(e @ e.T).item()
+
 
     #* mean
     #mean_r2 += np.sum(r2_score(y, y_mean_pred(batch_size), multioutput='raw_values'))
@@ -301,6 +322,7 @@ for i, (x,y) in tqdm(enumerate(test_loader), desc='R2'):
         print('pca', 1 - pca_RSS/SST)
         print('fnn', 1 - fnn_RSS/SST)
         print('m1_r2', 1 - m1_RSS/SST)
+        print('m2_r2', 1 - m2_RSS/SST)
         #print('mean_r2', mean_r2)
 
 
@@ -309,4 +331,5 @@ print('FINAL VALUES:')
 print('pca', 1 - pca_RSS/SST)
 print('fnn', 1 - fnn_RSS/SST)
 print('m1_r2', 1 - m1_RSS/SST)
+print('m2_r2', 1 - m2_RSS/SST)
 #print('mean_r2', mean_r2/N)

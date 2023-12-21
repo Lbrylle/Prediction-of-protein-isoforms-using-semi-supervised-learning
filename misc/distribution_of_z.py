@@ -1,6 +1,8 @@
 """local test of z distribution
 
 sampling a labelled datapoint and encode it with the m1 and m2
+
+OBS: THIS NEEDS TO BE MOVED ONE DIRECTORY IF YOU WISH TO RUN IT
 """
 
 

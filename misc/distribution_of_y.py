@@ -1,6 +1,8 @@
 """local test of y distribution
 
 picking a isoform and checking if it normal distributed
+
+OBS: THIS NEEDS TO BE MOVED ONE DIRECTORY IF YOU WISH TO RUN IT
 """
 
 from sklearn.metrics import r2_score
