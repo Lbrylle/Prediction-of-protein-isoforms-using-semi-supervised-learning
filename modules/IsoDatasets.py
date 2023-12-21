@@ -1,3 +1,6 @@
+"""A very nice pytorch dataset given by the supervisors
+"""
+
 import h5py
 import re
 import numpy as np

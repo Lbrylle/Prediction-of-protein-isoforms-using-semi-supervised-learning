@@ -1,5 +1,4 @@
 """MAINSPLIT is a class for making the main data-split mentioned in the report. See the comments for more information.
-
 """
 
 
@@ -87,6 +86,8 @@ class MainSplit(torch.utils.data.Dataset):
                
 
 def calculate_mean_sd(loader, N):
+    """not so relevant, more of an experiment
+    """
     x_sum = 0 #torch.zeros(18965).to(device)
     sum_sq = 0
 
