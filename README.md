@@ -43,7 +43,7 @@ In the modules folder one would find:
 * modules/plotting.py: some plotting functions (used for showing performance under training)
 
 ## Contributions
-For contributions or queries, please contact s203832@student.dtu.dk or s214644@student.dtu.d.
+For contributions or queries, please contact s203832@student.dtu.dk or s214644@student.dtu.dk
 
 ## Acknowledgements
 Special thanks to our supervisors Jes Frellsen (jefr@dtu.dk) and Kristoffer Vitting-Seerup (krivi@dtu.dk)
