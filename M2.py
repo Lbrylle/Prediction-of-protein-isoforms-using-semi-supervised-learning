@@ -96,6 +96,8 @@ class M2(nn.Module):
         # define the parameters of the prior, chosen as p(z) = N(0, I)
         self.register_buffer('prior_params', torch.zeros(torch.Size([1, 2*latent_dim])))
 
+        # initiliaztion caused bad minima so not included here actually 
+
 
 
     def forward(self, x: Tensor, y: Tensor) -> Tensor:

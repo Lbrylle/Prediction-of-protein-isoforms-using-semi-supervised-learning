@@ -51,25 +51,28 @@ class VariationalAutoencoder(nn.Module):
         # Encode the observation `x` into the parameters of the posterior distribution
         # `q_\phi(z|x) = N(z | \mu(x), \sigma(x)), \mu(x),\log\sigma(x) = h_\phi(x)`
         self.encoder = nn.Sequential(
-            nn.Linear(in_features=self.observation_features, out_features=512),
+            nn.Linear(in_features=self.observation_features, out_features=256),
+            #nn.BatchNorm1d(256),
             nn.ReLU(),
-            nn.Linear(in_features=512, out_features=256),
+            nn.Linear(in_features=256, out_features=128),
+            #nn.BatchNorm1d(128),
             nn.ReLU(),
             # A Gaussian is fully characterised by its mean \mu and variance \sigma**2
-            nn.Linear(in_features=256, out_features=2*latent_features) # <- note the 2*latent_features
+            nn.Linear(in_features=128, out_features=2*latent_features) # <- note the 2*latent_features
         )
 
         # Generative Model
         # Decode the latent sample `z` into the parameters of the observation model
         # `p_\theta(x | z) = \prod_i B(x_i | g_\theta(x))`
         self.decoder = nn.Sequential(
-            nn.Linear(in_features=latent_features, out_features=256),
+            nn.Linear(in_features=latent_features, out_features=128),
+            #nn.BatchNorm1d(128),
             nn.ReLU(),
-            nn.Linear(in_features=256, out_features=512),
+            nn.Linear(in_features=128, out_features=256),
+            #nn.BatchNorm1d(256),
             nn.ReLU(),
-            nn.Linear(in_features=512, out_features=2*self.observation_features),
+            nn.Linear(in_features=256, out_features=2*self.observation_features),
         )
-
         # define the parameters of the prior, chosen as p(z) = N(0, I)
         self.register_buffer('prior_params', torch.zeros(torch.Size([1, 2*latent_features])))
 

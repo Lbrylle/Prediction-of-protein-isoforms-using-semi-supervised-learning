@@ -52,7 +52,6 @@ class FNN(nn.Module):
 
     def forward(self, x: Tensor) -> Tensor:
         mu, log_var = self.regressor(x).chunk(2, dim=-1)
-        print(mu.shape, log_var.shape)
         p_y = Normal(mu, log_var.exp())
         return p_y.rsample()
 
