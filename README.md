@@ -32,7 +32,7 @@ https://drive.google.com/drive/folders/1vJQ_KLSOcMv2daaFpuJoyUxyqpcWQDX5?usp=dri
 
 * misc/R2_calculation: script for calculating the **Coefficient of Determination** ($R^2$-value). 
 
-In the modules folder one would find:
+*In the modules folder one would find:*
 
 * modules/helperFunctions.py: file containing some helper functions for running the large models
 
@@ -41,6 +41,26 @@ In the modules folder one would find:
 * modules/MainSplit.py: modified version of the pytorch datasets contained in the IsoDatasets, in order to create the stratified main split of the data
 
 * modules/plotting.py: some plotting functions (used for showing performance under training)
+
+*In the epoch_data directory one would find:*
+
+* epoch_data/M2_train.pkl: the train ELBO and train MSE error for $\mathcal{M}_{M2}$
+
+* epoch_data/M2_test.pkl: the test ELBO and test MSE error for $\mathcal{M}_{M2}$
+
+* epoch_data/M1_train.npy: pending
+
+* epoch_data/M1_test.npy: pending
+
+* epoch_data/pca_train.npy: the train MSE error for regressor trained on PCA features
+
+* epoch_data/pca_test.npy: the test MSE error for regressor trained on PCA features
+
+* epoch_data/fnn_train.npy: the train error for the Feed-forward Neural Network
+
+* epoch_data/fnn_test.npy: the test error for the Feed-forward Neural Network
+
+
 
 ## Contributions
 For contributions or queries, please contact Lucas Brylle (s203832@student.dtu.dk) or Nikolaj Hertz (s214644@student.dtu.dk)
