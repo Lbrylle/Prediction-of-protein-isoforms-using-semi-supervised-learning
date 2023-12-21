@@ -5,7 +5,7 @@ The distribution of the different terms of the model is:
         p(x|z,y) ~ Normal(mu, std), where mu and std are determined by the decoder NN
         p(z) ~ Normal(0, 1) (Standard Gaussian)
         p(y|x) ~ Normal(mu, std), where mu and std are determined by the regression (NN)
-        p(y) ~ Normal(mu, std) where mu and std are calculated beforehand with the script **Insert Name**
+        p(y) ~ Normal(mu, std) where mu and std are calculated beforehand with the script **Insert Name** (saved as a file called)
 
 Parts of the code is inspired by the exercise in week 7 of the course Deep Learning 02456.
 
@@ -17,30 +17,27 @@ LATEST CHANGES:
 
 
 # imports
-# TODO: REMOVE UNUSED IMPORTS
 from torch import nn, Tensor
 import torch
-from torch.distributions import Normal, Distribution, Uniform
-import h5py
-import re
+from torch.distributions import Normal
 import pandas as pd
 import numpy as np
 import torch.utils.data
 from sklearn.model_selection import train_test_split
-from torch.utils.data import Subset
 from collections import defaultdict
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from modules.plotting import *
 from modules.helperFunctions import *
-from sklearn.decomposition import PCA
-from sklearn.impute import SimpleImputer
 
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
+############################################################################################################
+#* THE MAIN MODEL (M2)
+############################################################################################################
 
 
 class M2(nn.Module):
@@ -229,7 +226,7 @@ class M2(nn.Module):
 
 
 if __name__ == '__main__':
-
+    # parameters
     random_seed_ = 1
     batch_size = 256
     N_isoform = 156958
@@ -245,6 +242,11 @@ if __name__ == '__main__':
 
     # seeding 
     random_seed(random_seed_)
+
+
+    ############################################################################################################
+    #* LOADING DATA (MainSplit)
+    ############################################################################################################
 
 
     path_to_data = "/dtu-compute/datasets/iso_02456/hdf5-row-sorted/"
@@ -288,6 +290,12 @@ if __name__ == '__main__':
     test_loader = DataLoader(test_validation_split, batch_size=batch_size, shuffle=True, drop_last=True)
 
 
+
+    ############################################################################################################
+    #* TRAINING THE MODEL
+    ############################################################################################################
+
+
     # define dictionary to store the training curves
     training_data = defaultdict(list)
     validation_data = defaultdict(list)
@@ -309,15 +317,16 @@ if __name__ == '__main__':
     
 
     def removeNaN(t1, t2):
-        
+        """
+        helper functions to remove unlabelled points
+        """
+    
+        index =  torch.sum(t1,axis=1)==0
 
-        combined_nan_indices =  torch.sum(t1,axis=1)==0
-
-        t1_masked = t1[torch.logical_not(combined_nan_indices)]
-        t2_masked = t2[torch.logical_not(combined_nan_indices)]
-
-
+        t1_masked = t1[torch.logical_not(index)]
+        t2_masked = t2[torch.logical_not(index)]
         return t1_masked, t2_masked
+
 
     def train(vae, optimizer, num_epochs):
         epoch = 0
