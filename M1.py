@@ -16,6 +16,7 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 from modules.plotting import *
+from modules.helperFunctions import *
 from tqdm import tqdm
 from collections import defaultdict
 from typing import *
@@ -26,48 +27,14 @@ from torch.utils.data import DataLoader
 from torch.distributions import Distribution
 from torch.distributions import Normal
 from sklearn.model_selection import train_test_split
-from functions import reduce, ReparameterizedDiagonalGaussian, init_dataloaders
+#from functions import reduce, ReparameterizedDiagonalGaussian, init_dataloaders
 import time
 import os
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using ", device)
 
-def save_parameters(save_path, **kwargs):
-    with open(os.path.join(save_path,  "parameters.txt"), 'w') as f:  
-        for key, value in kwargs.items():  
-            f.write('%s:%s\n' % (key, value))
 
-
-def random_seed(random_seed):
-    """
-    Function to seed the data-split and backpropagation (to enforce reproducibility)
-    """
-    torch.manual_seed(random_seed)
-    torch.cuda.manual_seed(random_seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-    np.random.seed(random_seed)
-
-
-
-def init_folders(experiment_name):
-    """
-    Create folders for saving data.
-    """
-    main_path = os.getcwd()
-    today = time.strftime("%d_%m")
-
-    main_folder = os.path.join(main_path, 'results/')
-    if not os.path.exists(main_folder):
-        os.mkdir(main_folder)
-    if not os.path.exists(main_folder + today):
-        os.mkdir(main_folder + today)
-    if not os.path.exists(main_folder + today + '/' + experiment_name):
-        os.mkdir(main_folder + today + '/' + experiment_name)
-    save_path = main_folder + today + '/' + experiment_name + '/'
-
-    return save_path
 
 
 class VariationalAutoencoder(nn.Module):

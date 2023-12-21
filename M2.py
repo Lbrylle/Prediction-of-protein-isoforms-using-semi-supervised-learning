@@ -32,57 +32,16 @@ from collections import defaultdict
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from modules.plotting import *
+from modules.helperFunctions import *
 from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
 
+
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def random_seed(random_seed):
-    """
-    Function to seed the data-split and backpropagation (to enforce reproducibility)
-    """
-    torch.manual_seed(random_seed)
-    torch.cuda.manual_seed(random_seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-    np.random.seed(random_seed)
 
 
-
-
-class ReparameterizedDiagonalGaussian(Distribution):
-    """
-    A distribution `N(y | mu, sigma I)` compatible with the reparameterization trick given `epsilon ~ N(0, 1)`.
-    """
-    def __init__(self, mu: Tensor, log_sigma:Tensor):
-        assert mu.shape == log_sigma.shape, f"Tensors `mu` : {mu.shape} and ` log_sigma` : {log_sigma.shape} must be of the same shape"
-        self.mu = mu
-        self.sigma = log_sigma.exp()
-
-    def sample_epsilon(self) -> Tensor:
-        """`\eps ~ N(0, I)`"""
-        return torch.empty_like(self.mu).normal_().to(device)
-
-    def sample(self) -> Tensor:
-        """sample `z ~ N(z | mu, sigma)` (without gradients)"""
-        with torch.no_grad():
-            return self.rsample()
-
-    def rsample(self) -> Tensor:
-        """sample `z ~ N(z | mu, sigma)` (with the reparameterization trick) """
-        eps = torch.normal(0.0, 1.0, self.mu.shape).to(device)
-
-        z = (self.mu + self.sigma * eps).to(device)
-        return z
-
-    def log_prob(self, z:Tensor) -> Tensor:
-        """return the log probability: log `p(z)`"""
-        m = Normal(self.mu, self.sigma)
-        return m.log_prob(z).to(device)
-
-def reduce(x:Tensor) -> Tensor:
-    """for each datapoint: sum over all dimensions"""
-    return x.view(x.size(0), -1).sum(dim=1)
 
 class M2(nn.Module):
     def __init__(self, 
