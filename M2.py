@@ -59,25 +59,25 @@ class M2(nn.Module):
         # q(z|x,y)
         # (it takes x and y as inputs)
         self.encoder = nn.Sequential(
-            nn.Linear(in_features=input_dim + N_isoform, out_features=512),
-            nn.BatchNorm1d(512),
-            nn.ReLU(),
-            nn.Linear(in_features=512, out_features=256),
+            nn.Linear(in_features=input_dim + N_isoform, out_features=256),
             nn.BatchNorm1d(256),
             nn.ReLU(),
-            nn.Linear(in_features=256, out_features=2 * latent_dim) 
+            nn.Linear(in_features=256, out_features=128),
+            nn.BatchNorm1d(128),
+            nn.ReLU(),
+            nn.Linear(in_features=128, out_features=2 * latent_dim) 
         )
 
         # p(x|z,y)
         # (it takes z and y as inputs)
         self.decoder = nn.Sequential( 
-            nn.Linear(in_features=latent_dim + N_isoform, out_features=256),
+            nn.Linear(in_features=latent_dim + N_isoform, out_features=128),
+            nn.BatchNorm1d(128),
+            nn.ReLU(),
+            nn.Linear(in_features=128, out_features=256),
             nn.BatchNorm1d(256),
             nn.ReLU(),
-            nn.Linear(in_features=256, out_features=512),
-            nn.BatchNorm1d(512),
-            nn.ReLU(),
-            nn.Linear(in_features=512, out_features=2 * input_dim),
+            nn.Linear(in_features=256, out_features=2 * input_dim),
         )
 
         # Regression FNN
